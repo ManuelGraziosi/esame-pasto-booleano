@@ -35,8 +35,6 @@ class AllergenController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // dd($request);
 
         // recupero tutti dati invati dal form
         $data = $request->all();
