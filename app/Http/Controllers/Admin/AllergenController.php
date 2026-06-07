@@ -26,7 +26,7 @@ class AllergenController extends Controller
     {
         //
         // return view('allergens.create');
-        return 'allergen create';
+        return view('allergens.create');
     }
 
     /**
@@ -35,7 +35,24 @@ class AllergenController extends Controller
     public function store(Request $request)
     {
         //
-        return 'allergen store';
+        // dd($request);
+
+        // recupero tutti dati invati dal form
+        $data = $request->all();
+        // dd($data);
+
+        $newAllergen = new Allergen;
+
+        $newAllergen->name = $data['name'];
+        $newAllergen->slug = $data['slug'];
+        $newAllergen->description = $data['description'];
+        $newAllergen->icon = $data['icon'];
+
+        // dd($newAllergen);
+
+        $newAllergen->save();
+
+        return redirect()->route('allergens.show', $newAllergen);
     }
 
     /**
