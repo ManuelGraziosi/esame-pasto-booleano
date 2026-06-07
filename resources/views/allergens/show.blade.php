@@ -30,22 +30,31 @@
                                     <i class="bi bi-pencil"></i> Modifica
                                 </a>
 
-                                <!-- DELETE 1 -->
-                                <form action="{{ route('allergens.destroy', $allergen) }}" method="POST"
-                                    onsubmit="return confirm('Sei sicuro di voler eliminare questo allergene?')">
-                                    @csrf
-                                    @method('DELETE')
 
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="bi bi-trash"></i> Elimina
-                                    </button>
-                                </form>
+                                @auth
+                                    @if (auth()->user()->role === 'admin')
+                                        <!-- DELETE 1 -->
+                                        <form action="{{ route('allergens.destroy', $allergen) }}" method="POST"
+                                            onsubmit="return confirm('Sei sicuro di voler eliminare questo allergene?')">
+                                            @csrf
+                                            @method('DELETE')
 
-                                {{-- <!-- DELETE 2 -->
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="bi bi-trash"></i> Elimina
+                                            </button>
+                                        </form>
+
+                                        {{-- <!-- DELETE 2 -->
                                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     Elimina
                                 </button> --}}
+                                    @else
+                                        <button class="btn btn-danger" disabled>
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    @endif
+                                @endauth
                             </div>
                         </div>
                     </div>

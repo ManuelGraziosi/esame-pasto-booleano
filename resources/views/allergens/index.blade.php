@@ -37,15 +37,26 @@
                             <a class="btn btn-warning" href="{{ route('allergens.edit', $allergen) }}">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <form action="{{ route('allergens.destroy', $allergen) }}" method="POST"
-                                onsubmit="return confirm('Sei sicuro di voler eliminare questo allergene?')">
-                                @csrf
-                                @method('DELETE')
 
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                            @auth
+                                @if (auth()->user()->role === 'admin')
+                                    <form action="{{ route('allergens.destroy', $allergen) }}" method="POST"
+                                        onsubmit="return confirm('Sei sicuro di voler eliminare questo allergene?')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                @else
+                                    <button class="btn btn-danger" disabled>
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                @endif
+                            @endauth
+
+
                         </td>
                     </tr>
                 @endforeach

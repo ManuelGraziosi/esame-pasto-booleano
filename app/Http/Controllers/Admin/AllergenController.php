@@ -103,7 +103,11 @@ class AllergenController extends Controller
      */
     public function destroy(Allergen $allergen)
     {
-        //
+
+        if (auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
         $allergen->delete();
 
         return redirect()->route('allergens.index');
