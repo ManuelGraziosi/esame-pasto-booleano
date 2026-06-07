@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Allergen;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,9 @@ class AllergenController extends Controller
     public function index()
     {
         //
-        $allergenes = Allergen::all();
+        $allergens = Allergen::all();
 
-        return view('allergenes.index', compact('allergenes'));
+        return view('allergens.index', compact('allergens'));
     }
 
     /**
@@ -24,6 +25,8 @@ class AllergenController extends Controller
     public function create()
     {
         //
+        // return view('allergens.create');
+        return 'allergen create';
     }
 
     /**
@@ -32,14 +35,16 @@ class AllergenController extends Controller
     public function store(Request $request)
     {
         //
+        return 'allergen store';
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Allergen $allergen)
     {
-        //
+
+        return view('allergens.show', compact('allergen'));
     }
 
     /**
@@ -48,6 +53,7 @@ class AllergenController extends Controller
     public function edit(string $id)
     {
         //
+        return 'allergen edit';
     }
 
     /**
@@ -56,6 +62,7 @@ class AllergenController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        return 'allergen update';
     }
 
     /**
@@ -64,5 +71,6 @@ class AllergenController extends Controller
     public function destroy(string $id)
     {
         //
+        return 'allergen destroy';
     }
 }
