@@ -67,19 +67,32 @@ class AllergenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Allergen $allergen)
     {
         //
-        return 'allergen edit';
+        return view('allergens.update', compact('allergen'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Allergen $allergen)
     {
         //
-        return 'allergen update';
+        // dd($request);
+
+        $data = $request->all();
+
+        $allergen->name = $data['name'];
+        $allergen->slug = $data['slug'];
+        $allergen->description = $data['description'];
+        $allergen->icon = $data['icon'];
+
+        // dd($allergen);
+
+        $allergen->update();
+
+        return view('allergens.show', compact('allergen'));
     }
 
     /**
