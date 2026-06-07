@@ -15,8 +15,6 @@
                     <th scope="col">slug</th>
                     <th scope="col">description</th>
                     <th scope="col">icon</th>
-                    <th scope="col">created_at</th>
-                    <th scope="col">updated_at</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,9 +25,7 @@
                         <td>{{ $allergen->name }}</td>
                         <td>{{ $allergen->slug }}</td>
                         <td>{{ $allergen->description }}</td>
-                        <td>{{ $allergen->icon }}</td>
-                        <td>{{ $allergen->created_at }}</td>
-                        <td>{{ $allergen->updated_at }}</td>
+                        <td><img src="{{ $allergen->icon }}" alt="{{ $allergen->name }}"></td>
                     </tr>
                 @endforeach
             </tbody>
