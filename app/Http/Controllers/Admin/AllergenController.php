@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Allergen;
 use Illuminate\Http\Request;
+use Str;
 
 class AllergenController extends Controller
 {
@@ -40,6 +41,7 @@ class AllergenController extends Controller
         // recupero tutti dati invati dal form
         $data = $request->all();
         // dd($data);
+        $data['slug'] = Str::slug($request->name, '_');
 
         $newAllergen = new Allergen;
 
@@ -82,6 +84,7 @@ class AllergenController extends Controller
         // dd($request);
 
         $data = $request->all();
+        $data['slug'] = Str::slug($request->name, '_');
 
         $allergen->name = $data['name'];
         $allergen->slug = $data['slug'];
@@ -98,9 +101,11 @@ class AllergenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Allergen $allergen)
     {
         //
-        return 'allergen destroy';
+        $allergen->delete();
+
+        return redirect()->route('allergens.index');
     }
 }

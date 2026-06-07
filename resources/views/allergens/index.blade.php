@@ -31,10 +31,21 @@
                         <td>{{ $allergen->description }}</td>
                         <td><img src="{{ $allergen->icon }}" alt="{{ $allergen->name }}"></td>
                         <td class="d-flex">
-                            <a class="btn btn-info" href="{{ route('allergens.show', $allergen) }}"><i
-                                    class="bi bi-eye"></i></a>
-                            <a class="btn btn-warning"><i class="bi bi-pencil"></i></a>
-                            <a class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                            <a class="btn btn-info" href="{{ route('allergens.show', $allergen) }}">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a class="btn btn-warning" href="{{ route('allergens.edit', $allergen) }}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form action="{{ route('allergens.destroy', $allergen) }}" method="POST"
+                                onsubmit="return confirm('Sei sicuro di voler eliminare questo allergene?')">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

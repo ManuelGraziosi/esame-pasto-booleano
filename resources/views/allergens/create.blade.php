@@ -8,12 +8,10 @@
 
                 <div class="card shadow-sm">
 
-                    {{-- HEADER --}}
                     <div class="card-header">
                         <h4 class="mb-0">Crea nuovo allergene</h4>
                     </div>
 
-                    {{-- BODY --}}
                     <div class="card-body">
 
                         <form action="{{ route('allergens.store') }}" method="POST">
@@ -36,9 +34,8 @@
                             {{-- SLUG --}}
                             <div class="mb-3">
                                 <label class="form-label">Slug</label>
-                                <input type="text" name="slug"
-                                    class="form-control bg-light @error('slug') is-invalid @enderror"
-                                    value="{{ old('slug') }}" readonly>
+                                <input type="text" name="slug" class="form-control bg-light"
+                                    value="{{ old('slug') }}" readonly tabindex="-1">
 
                                 @error('slug')
                                     <div class="invalid-feedback">
