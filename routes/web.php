@@ -1,14 +1,12 @@
 <?php
 
-use App\Http\Controllers\AllergenController;
+use App\Http\Controllers\Admin\AllergenController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 });
-
-Route::get('/allergenes', [AllergenController::class, 'index']);
 
 Route::get('/laravel-home', function () {
     return view('welcome');
@@ -23,5 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::resource('/allergens', AllergenController::class)
+    ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
