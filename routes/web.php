@@ -1,9 +1,16 @@
 <?php
 
+use App\Http\Controllers\AllergenController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    return view('home');
+});
+
+Route::get('/allergenes', [AllergenController::class, 'index']);
+
+Route::get('/laravel-home', function () {
     return view('welcome');
 });
 
