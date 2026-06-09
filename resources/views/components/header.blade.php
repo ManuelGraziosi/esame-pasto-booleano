@@ -22,7 +22,10 @@
                             <a class="nav-link" href="{{ url('/') }}">{{ __('Home') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/allergenes') }}">{{ __('Allergeni') }}</a>
+                            <a class="nav-link" href="{{ url('/allergens') }}">{{ __('Allergeni') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/ingredients') }}">{{ __('Ingredienti') }}</a>
                         </li>
                     </ul>
 
