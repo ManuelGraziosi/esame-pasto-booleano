@@ -12,7 +12,7 @@
 <body>
     <x-header></x-header>
     <div class="container">
-        <h1>@yield('title')</h1>
+
 
         @yield('content')
 
