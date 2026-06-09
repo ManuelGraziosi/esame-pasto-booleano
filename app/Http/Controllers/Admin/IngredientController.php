@@ -89,17 +89,36 @@ class IngredientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Ingredient $ingredient)
     {
         //
+        return view('ingredients.update', compact('ingredient'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Ingredient $ingredient)
     {
         //
+        $data = $request->all();
+
+        $ingredient->name = $data['name'];
+        $ingredient->slug = $data['slug'];
+        $ingredient->energy_kcal = $data['energy_kcal'];
+        $ingredient->proteins = $data['proteins'];
+        $ingredient->lipids = $data['lipids'];
+        $ingredient->available_carbohydrates = $data['available_carbohydrates'];
+        $ingredient->total_fiber = $data['total_fiber'];
+        $ingredient->iron = $data['iron'];
+        $ingredient->sodium = $data['sodium'];
+        $ingredient->calcium = $data['calcium'];
+        $ingredient->potassium = $data['potassium'];
+
+        $ingredient->update();
+
+        return view('ingredients.show', compact('ingredient'));
+
     }
 
     /**

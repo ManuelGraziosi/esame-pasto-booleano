@@ -17,9 +17,9 @@
                         <form action="{{ route('ingredients.store') }}" method="POST">
                             @csrf
 
-                            {{-- ===================== --}}
+
                             {{-- DATI BASE --}}
-                            {{-- ===================== --}}
+
                             <h5 class="mb-3">Informazioni base</h5>
 
                             <div class="row">
@@ -66,9 +66,9 @@
 
                             <hr>
 
-                            {{-- ===================== --}}
+
                             {{-- MACRONUTRIENTI --}}
-                            {{-- ===================== --}}
+
                             <h5 class="mb-3">Valori nutrizionali principali</h5>
 
                             <div class="row">
@@ -101,9 +101,9 @@
 
                             <hr>
 
-                            {{-- ===================== --}}
+
                             {{-- DETTAGLI AVANZATI --}}
-                            {{-- ===================== --}}
+
                             <button class="btn btn-outline-secondary mb-3" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#advanced">
                                 Mostra dettagli avanzati
@@ -146,7 +146,7 @@
 
                             </div>
 
-                            {{-- BUTTONS --}}
+                            {{-- BOTTONI --}}
                             <div class="d-flex justify-content-between mt-4">
                                 <a href="{{ route('ingredients.index') }}" class="btn btn-secondary">
                                     ← Annulla
