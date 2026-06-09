@@ -45,6 +45,8 @@ class IngredientController extends Controller
     public function create()
     {
         //
+        return view('ingredients.create');
+
     }
 
     /**
@@ -53,6 +55,24 @@ class IngredientController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->all();
+
+        $newIngredient = new Ingredient;
+        $newIngredient->name = $data['name'];
+        $newIngredient->slug = $data['slug'];
+        $newIngredient->energy_kcal = $data['energy_kcal'];
+        $newIngredient->proteins = $data['proteins'];
+        $newIngredient->lipids = $data['lipids'];
+        $newIngredient->available_carbohydrates = $data['available_carbohydrates'];
+        $newIngredient->total_fiber = $data['total_fiber'];
+        $newIngredient->iron = $data['iron'];
+        $newIngredient->sodium = $data['sodium'];
+        $newIngredient->calcium = $data['calcium'];
+        $newIngredient->potassium = $data['potassium'];
+
+        dd($newIngredient);
+
+        return view('ingredients.show');
     }
 
     /**

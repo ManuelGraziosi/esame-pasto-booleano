@@ -15,11 +15,16 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
+            $table->string('slug')->unique();
             $table->unsignedSmallInteger('energy_kcal')->nullable();
             $table->decimal('proteins', 7, 2)->nullable();
             $table->decimal('lipids', 7, 2)->nullable();
             $table->decimal('available_carbohydrates', 7, 2)->nullable();
             $table->decimal('total_fiber', 7, 2)->nullable();
+            $table->decimal('iron', 7, 2)->nullable();
+            $table->decimal('sodium', 7, 2)->nullable();
+            $table->decimal('calcium', 7, 2)->nullable();
+            $table->decimal('potassium', 7, 2)->nullable();
 
             $table->timestamps();
         });

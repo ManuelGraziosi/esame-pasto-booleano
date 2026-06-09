@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Ingredient;
 use Illuminate\Database\Seeder;
+use Str;
 
 class IngredientsTableSeeder extends Seeder
 {
@@ -803,11 +804,16 @@ class IngredientsTableSeeder extends Seeder
             $newIngredient = new Ingredient;
 
             $newIngredient->name = $ingredient['name'];
+            $newIngredient->slug = Str::slug($ingredient['name']);
             $newIngredient->energy_kcal = $ingredient['energy_kcal'];
             $newIngredient->proteins = $ingredient['proteins'];
             $newIngredient->lipids = $ingredient['lipids'];
             $newIngredient->available_carbohydrates = $ingredient['available_carbohydrates'];
             $newIngredient->total_fiber = $ingredient['total_fiber'];
+            $newIngredient->iron = (array_key_exists('iron', $ingredients) ? $ingredient['iron'] : 44);
+            $newIngredient->sodium = (array_key_exists('sodium', $ingredients) ? $ingredient['sodium'] : 55);
+            $newIngredient->calcium = (array_key_exists('calcium', $ingredients) ? $ingredient['calcium'] : 66);
+            $newIngredient->potassium = (array_key_exists('potassium', $ingredients) ? $ingredient['potassium'] : 77);
 
             $newIngredient->save();
         }
