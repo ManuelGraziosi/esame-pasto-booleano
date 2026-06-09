@@ -70,9 +70,11 @@ class IngredientController extends Controller
         $newIngredient->calcium = $data['calcium'];
         $newIngredient->potassium = $data['potassium'];
 
-        dd($newIngredient);
+        // dd($newIngredient);
 
-        return view('ingredients.show');
+        $newIngredient->save();
+
+        return redirect()->route('ingredients.show', $newIngredient);
     }
 
     /**

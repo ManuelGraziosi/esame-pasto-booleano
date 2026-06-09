@@ -55,13 +55,13 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">name</th>
-                    <th scope="col">energy_kcal</th>
-                    <th scope="col">proteins</th>
-                    <th scope="col">lipids</th>
-                    <th scope="col">available_carbohydrates</th>
-                    <th scope="col">total_fiber</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Kcal</th>
+                    <th scope="col">Proteine</th>
+                    <th scope="col">Grassi</th>
+                    <th scope="col">Carbidrati</th>
+                    <th scope="col">Fibre</th>
 
                 </tr>
             </thead>
@@ -76,6 +76,7 @@
                         <td>{{ $ingredient->lipids }}</td>
                         <td>{{ $ingredient->available_carbohydrates }}</td>
                         <td>{{ $ingredient->total_fiber }}</td>
+
                         <td class="d-flex">
                             <a class="btn btn-info" href="{{ route('ingredients.show', $ingredient) }}">
                                 <i class="bi bi-eye"></i>

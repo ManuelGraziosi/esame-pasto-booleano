@@ -1,11 +1,6 @@
 @extends('layouts.master')
 
 
-@section('title')
-    {{ $ingredient->name }}
-@endsection
-
-@section('content')
 @section('content')
     <div class="card-header d-flex justify-content-between align-items-center m-4">
 
