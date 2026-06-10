@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AllergensTableSeeder::class,
             IngredientsTableSeeder::class,
+            AllergenIngredientTableSeeder::class,
         ]);
     }
 }
