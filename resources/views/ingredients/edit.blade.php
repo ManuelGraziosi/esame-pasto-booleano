@@ -64,6 +64,24 @@
 
                             <hr>
 
+                            {{-- ALLERGENI --}}
+
+                            <h5 class="mb-3">Allergeni</h5>
+
+                            <div class="row">
+                                @foreach ($allergens as $allergen)
+                                    <div class="col-md-3 mb-3">
+                                        <input class="form-check-input" type="checkbox" name="allergens[]"
+                                            value="{{ $allergen->id }}" id="allergens-{{ $allergen->id }}"
+                                            {{ $ingredient->allergens->contains($allergen->id) ? 'checked' : '' }}>
+                                        <label class="form-label"
+                                            for="allergens-{{ $allergen->id }}">{{ $allergen->name }}</label>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                            <hr>
+
 
                             {{-- MACRONUTRIENTI --}}
 
