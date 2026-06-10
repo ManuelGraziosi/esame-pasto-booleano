@@ -64,6 +64,16 @@
 
         <hr>
 
+        ALLERGENI
+        <div id="allergens">
+            @foreach ($ingredient->allergens as $allergen)
+                <span class="badge"
+                    style="background: {{ $allergen->color }}; text : {{ $allergen->text }}">{{ $allergen->name }}</span>
+            @endforeach
+        </div>
+
+        <hr>
+
         <button class="btn btn-outline-secondary mb-2" data-bs-toggle="collapse" data-bs-target="#nutrients">
             Mostra dettagli nutrizionali
         </button>
@@ -90,6 +100,13 @@
             <p><strong>Slug:</strong> {{ $ingredient->slug }}</p>
             <p><strong>Creato:</strong> {{ $ingredient->created_at->format('d/m/Y H:i') }}</p>
             <p><strong>Aggiornato:</strong> {{ $ingredient->updated_at->format('d/m/Y H:i') }}</p>
+        </div>
+
+        {{-- BACK BUTTON --}}
+        <div class="mt-3">
+            <a href="{{ route('ingredients.index') }}" class="btn btn-secondary">
+                ← Torna alla lista
+            </a>
         </div>
 
     </div>

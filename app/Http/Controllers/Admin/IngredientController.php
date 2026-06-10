@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Allergen;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 
@@ -83,6 +84,7 @@ class IngredientController extends Controller
     public function show(Ingredient $ingredient)
     {
         //
+
         return view('ingredients.show', compact('ingredient'));
     }
 
@@ -92,7 +94,9 @@ class IngredientController extends Controller
     public function edit(Ingredient $ingredient)
     {
         //
-        return view('ingredients.update', compact('ingredient'));
+        $allergens = Allergen::all();
+
+        return view('ingredients.edit', compact('ingredient', 'allergens'));
     }
 
     /**
@@ -102,6 +106,8 @@ class IngredientController extends Controller
     {
         //
         $data = $request->all();
+
+        // dd($data);
 
         $ingredient->name = $data['name'];
         $ingredient->slug = $data['slug'];
@@ -116,6 +122,9 @@ class IngredientController extends Controller
         $ingredient->potassium = $data['potassium'];
 
         $ingredient->update();
+
+        // sincroniziamo gli allergeni nella pivot
+        $ingredient->allergens()->sync($data['allergens']);
 
         return view('ingredients.show', compact('ingredient'));
 

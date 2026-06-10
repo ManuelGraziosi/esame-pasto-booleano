@@ -72,7 +72,7 @@ class AllergenController extends Controller
     public function edit(Allergen $allergen)
     {
         //
-        return view('allergens.update', compact('allergen'));
+        return view('allergens.edit', compact('allergen'));
     }
 
     /**
