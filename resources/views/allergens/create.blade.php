@@ -44,6 +44,34 @@
                                 @enderror
                             </div>
 
+                            {{-- BG COLOR --}}
+                            <div class="mb-3">
+                                <label class="form-label">Colore sfondo</label>
+                                <input type="color" name="color"
+                                    class="form-control @error('color') is-invalid @enderror" value="{{ old('color') }}"
+                                    required>
+
+                                @error('color')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            {{-- TEXT COLOR --}}
+                            <div class="mb-3">
+                                <label class="form-label">Colore test</label>
+                                <input type="color" name="text"
+                                    class="form-control @error('text') is-invalid @enderror" value="{{ old('text') }}"
+                                    required>
+
+                                @error('text')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             {{-- DESCRIPTION --}}
                             <div class="mb-3">
                                 <label class="form-label">Descrizione</label>

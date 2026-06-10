@@ -70,6 +70,12 @@
                                     {{ $allergen->slug }}
                                 </div>
                             </div>
+                            <div class="col-md-6 d-flex gap-2">
+                                <strong>Colore:</strong>
+                                <div style="background : {{ $allergen->color }}; color :  {{ $allergen->text }}">
+                                    {{ $allergen->color }}
+                                </div>
+                            </div>
                         </div>
 
 

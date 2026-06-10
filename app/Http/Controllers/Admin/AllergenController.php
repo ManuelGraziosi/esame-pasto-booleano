@@ -45,6 +45,8 @@ class AllergenController extends Controller
 
         $newAllergen->name = $data['name'];
         $newAllergen->slug = $data['slug'];
+        $newAllergen->color = $data['color'];
+        $newAllergen->text = $data['text'];
         $newAllergen->description = $data['description'];
         $newAllergen->icon = $data['icon'];
 
@@ -86,6 +88,8 @@ class AllergenController extends Controller
 
         $allergen->name = $data['name'];
         $allergen->slug = $data['slug'];
+        $allergen->color = $data['color'];
+        $allergen->text = $data['text'];
         $allergen->description = $data['description'];
         $allergen->icon = $data['icon'];
 
