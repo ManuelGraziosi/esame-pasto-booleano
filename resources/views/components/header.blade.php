@@ -27,6 +27,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/ingredients') }}">{{ __('Ingredienti') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/recipes') }}">{{ __('Ricette') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

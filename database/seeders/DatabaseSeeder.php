@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             AllergensTableSeeder::class,
             IngredientsTableSeeder::class,
             AllergenIngredientTableSeeder::class,
+            RecipesTableSeeder::class,
         ]);
     }
 }

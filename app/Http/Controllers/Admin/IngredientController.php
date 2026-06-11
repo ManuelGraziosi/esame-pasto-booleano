@@ -18,14 +18,14 @@ class IngredientController extends Controller
         $allergens = Allergen::all();
         $query = Ingredient::query();
 
-        // INCLUDE (almeno uno)
+        // include almeno un allergene
         if ($request->filled('allergens_include')) {
             $query->whereHas('allergens', function ($q) use ($request) {
                 $q->whereIn('allergens.id', $request->allergens_include);
             });
         }
 
-        // EXCLUDE
+        // esclude allergeni
         if ($request->filled('allergens_exclude')) {
             $query->whereDoesntHave('allergens', function ($q) use ($request) {
                 $q->whereIn('allergens.id', $request->allergens_exclude);
@@ -154,6 +154,7 @@ class IngredientController extends Controller
         if (auth()->user()->role !== 'admin') {
             abort(403);
         }
+        $ingredient->allergens()->detach();
 
         $ingredient->delete();
 
