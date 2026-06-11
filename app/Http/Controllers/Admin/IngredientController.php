@@ -15,7 +15,22 @@ class IngredientController extends Controller
     public function index(Request $request)
     {
         //
+        $allergens = Allergen::all();
         $query = Ingredient::query();
+
+        // INCLUDE (almeno uno)
+        if ($request->filled('allergens_include')) {
+            $query->whereHas('allergens', function ($q) use ($request) {
+                $q->whereIn('allergens.id', $request->allergens_include);
+            });
+        }
+
+        // EXCLUDE
+        if ($request->filled('allergens_exclude')) {
+            $query->whereDoesntHave('allergens', function ($q) use ($request) {
+                $q->whereIn('allergens.id', $request->allergens_exclude);
+            });
+        }
 
         // filtro per nome
         if ($request->filled('search')) {
@@ -37,7 +52,7 @@ class IngredientController extends Controller
 
         $ingredients = $query->paginate($perPage)->withQueryString();
 
-        return view('ingredients.index', compact('ingredients'));
+        return view('ingredients.index', compact('ingredients', 'allergens'));
     }
 
     /**

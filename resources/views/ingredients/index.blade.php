@@ -41,6 +41,53 @@
                 </select>
             </div>
 
+            <!-- ALLERGENI -->
+            <div class="col">
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside">
+                        Allergeni Accettati
+                    </button>
+
+                    <div class="dropdown-menu p-3" style="max-height: 300px; overflow-y: auto;">
+                        @foreach ($allergens as $allergen)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="allergens_include[]"
+                                    id="allergens_include-{{ $allergen->id }}" value="{{ $allergen->id }}"
+                                    {{ in_array($allergen->id, request('allergens_include', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="allergens_include-{{ $allergen->id }}">
+                                    {{ $allergen->name }}
+                                </label>
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside">
+                        Allergeni Da Escludere
+                    </button>
+
+                    <div class="dropdown-menu p-3" style="max-height: 300px; overflow-y: auto;">
+                        @foreach ($allergens as $allergen)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="allergens_exclude[]"
+                                    id="allergens_exclude-{{ $allergen->id }}" value="{{ $allergen->id }}"
+                                    {{ in_array($allergen->id, request('allergens_exclude', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="allergens_exclude-{{ $allergen->id }}">
+                                    {{ $allergen->name }}
+                                </label>
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
+
             <div class="col">
                 <button class="btn btn-primary">Filtra</button>
                 <a href="{{ route('ingredients.index') }}" class="btn btn-secondary">
