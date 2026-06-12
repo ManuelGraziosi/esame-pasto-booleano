@@ -44,6 +44,8 @@
                         @endauth
 
                     </div>
+
+
                 </div>
 
                 {{-- descrizione --}}
@@ -51,12 +53,35 @@
                     <p class="text-muted">
                         {{ $recipe->description }}
                     </p>
+                    <div>
+
+                        Allergeni:
+                        @foreach ($recipe->allergens as $allergen)
+                            <span class="badge"
+                                style="background: {{ $allergen->color }}; text : {{ $allergen->text }}">{{ $allergen->name }}</span>
+                        @endforeach
+                    </div>
                 @endif
 
             </div>
         </div>
 
         <div class="row">
+
+            {{-- PREPARAZIONE --}}
+            <div class="col-md-8">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header">
+                        <strong>Preparazione</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <p style="white-space: pre-line;">
+                            {{ $recipe->preparation }}
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             {{-- INGREDIENTI --}}
             <div class="col-md-4">
@@ -82,20 +107,7 @@
                 </div>
             </div>
 
-            {{-- PREPARAZIONE --}}
-            <div class="col-md-8">
-                <div class="card shadow-sm h-100">
-                    <div class="card-header">
-                        <strong>Preparazione</strong>
-                    </div>
 
-                    <div class="card-body">
-                        <p style="white-space: pre-line;">
-                            {{ $recipe->preparation }}
-                        </p>
-                    </div>
-                </div>
-            </div>
 
         </div>
 
@@ -103,6 +115,7 @@
         <div class="mt-4 text-muted small">
             Creato: {{ $recipe->created_at->format('d/m/Y H:i') }} |
             Aggiornato: {{ $recipe->updated_at->format('d/m/Y H:i') }}
+
         </div>
 
         {{-- BACK --}}

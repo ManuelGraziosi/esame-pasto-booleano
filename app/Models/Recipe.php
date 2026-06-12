@@ -11,4 +11,11 @@ class Recipe extends Model
     {
         return $this->belongsToMany((Ingredient::class))->withTimestamps()->withPivot('quantity');
     }
+
+    public function getAllergensAttribute()
+    {
+        return Allergen::whereHas('ingredients.recipes', function ($q) {
+            $q->where('recipes.id', $this->id);
+        })->distinct()->get();
+    }
 }
