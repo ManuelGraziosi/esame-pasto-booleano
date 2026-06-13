@@ -29,7 +29,12 @@
                         <td>{{ $allergen->name }}</td>
                         <td>{{ $allergen->slug }}</td>
                         <td>{{ $allergen->description }}</td>
-                        <td><img src="{{ $allergen->icon }}" alt="{{ $allergen->name }}"></td>
+                        <td>
+                            @if ($allergen->icon)
+                                <img class="img-fluid v-25" src="{{ asset('storage/' . $allergen->icon) }}"
+                                    alt="immagine che rappresenta {{ $allergen->name }}" width="40">
+                            @endif
+                        </td>
                         <td class="d-flex">
                             <a class="btn btn-info" href="{{ route('allergens.show', $allergen) }}">
                                 <i class="bi bi-eye"></i>

@@ -18,7 +18,9 @@
                     <div class="card-header d-flex align-items-center justify-content-between gap-3">
                         <div class="d-flex align-items-center">
 
-                            <img src="{{ $allergen->icon }}" alt="{{ $allergen->name }}" width="40">
+
+                            <img src="{{ asset('storage/' . $allergen->icon) }}"
+                                alt="immagine che rappresenta {{ $allergen->name }}" width="40">
 
                             <h4 class="mb-0">{{ $allergen->name }}</h4>
                         </div>

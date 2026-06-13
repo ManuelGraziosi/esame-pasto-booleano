@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Allergen;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
@@ -12,13 +13,45 @@ class RecipeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
 
-        $recipes = Recipe::all();
+        // $recipes = Recipe::all();
+        $allergens = Allergen::all();
 
-        return view('recipes.index', compact('recipes'));
+        $query = Recipe::query();
+
+        // ricerca nel titolo
+        if ($request->filled('search_title')) {
+            $query->where('title', 'like', '%'.$request->search_title.'%');
+        }
+
+        // ricerca nella descrizione
+        if ($request->filled('search_description')) {
+            $query->where('description', 'like', '%'.$request->search_description.'%');
+        }
+
+        // include almeno un allergene
+        if ($request->filled('allergens_include')) {
+            $query->whereHas('ingredients.allergens', function ($q) use ($request) {
+                $q->whereIn('allergens.id', $request->allergens_include);
+            });
+        }
+
+        // esclude allergeni
+        if ($request->filled('allergens_exclude')) {
+            $query->whereDoesntHave('ingredients.allergens', function ($q) use ($request) {
+                $q->whereIn('allergens.id', $request->allergens_exclude);
+            });
+        }
+
+        // paginazione dinamica
+        $perPage = $request->input('per_page', 10);
+
+        $recipes = $query->paginate($perPage)->withQueryString();
+
+        return view('recipes.index', compact('recipes', 'allergens'));
     }
 
     /**

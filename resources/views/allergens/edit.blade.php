@@ -16,7 +16,7 @@
 
                     <div class="card-body">
 
-                        <form action="{{ route('allergens.update', $allergen) }}" method="POST">
+                        <form action="{{ route('allergens.update', $allergen) }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             @method('PUT')
@@ -90,16 +90,21 @@
 
                             {{-- ICON --}}
                             <div class="mb-3">
-                                <label class="form-label">Icona (URL)</label>
-                                <input type="text" name="icon"
-                                    class="form-control @error('icon') is-invalid @enderror" value="{{ $allergen->icon }}"
-                                    required>
+                                <label class="form-label" for="icon">Icona</label>
+                                <input type="file" name="icon" id="icon"
+                                    class="form-control @error('icon') is-invalid @enderror" required>
 
                                 @error('icon')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
+
+                                @if ($allergen->icon)
+                                    <img class="img-fluid v-25" src="{{ asset('storage/' . $allergen->icon) }}"
+                                        alt="immagine che rappresenta {{ $allergen->name }}" width="40">
+                                @endif
+
                             </div>
 
                             {{-- BUTTONS --}}

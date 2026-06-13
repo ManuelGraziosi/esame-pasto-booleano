@@ -10,6 +10,7 @@
         <a class="btn btn-primary" href="{{ route('ingredients.create') }}">Aggiungi Ingrediente</a>
     </div>
 
+    {{-- blocco del form dei filtri --}}
     <form method="GET" action="{{ route('ingredients.index') }}" class="mb-4">
 
         <div class="row g-2">
@@ -98,7 +99,10 @@
         </div>
     </form>
     <div class="container">
-        {{ $ingredients->links() }}
+        {{-- blocco per mostrare la navigazione della paginazione --}}
+        <div class="col">
+            {{ $ingredients->links() }}
+        </div>
         <table class="table">
             <thead>
                 <tr>

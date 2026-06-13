@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Allergen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Str;
 
 class AllergenController extends Controller
@@ -48,7 +49,14 @@ class AllergenController extends Controller
         $newAllergen->color = $data['color'];
         $newAllergen->text = $data['text'];
         $newAllergen->description = $data['description'];
-        $newAllergen->icon = $data['icon'];
+
+        // controllo se c'è qualcosa in upload
+        if (array_key_exists('icon', $data)) {
+
+            // $newAllergen->icon = $data['icon'];
+            $icon_path = Storage::putFile('allergens', $data['icon']);
+            $newAllergen->icon = $icon_path;
+        }
 
         // dd($newAllergen);
 
@@ -91,8 +99,19 @@ class AllergenController extends Controller
         $allergen->color = $data['color'];
         $allergen->text = $data['text'];
         $allergen->description = $data['description'];
-        $allergen->icon = $data['icon'];
 
+        if (array_key_exists('icon', $data)) {
+
+            // eliminare l'immagine precedente
+            Storage::delete($allergen->icon);
+
+            // caricare la nuova
+            $icon_path = Storage::putFile('allergens', $data['icon']);
+
+            // aggiornare il bb
+            $allergen->icon = $icon_path;
+
+        }
         // dd($allergen);
 
         $allergen->update();

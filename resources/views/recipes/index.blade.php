@@ -10,6 +10,93 @@
         <a class="btn btn-primary" href="{{ route('recipes.create') }}">Aggiungi Ricetta</a>
     </div>
     <div class="container">
+        {{-- blocco del form dei filtri --}}
+        <form method="GET" action="{{ route('recipes.index') }}" class="mb-4">
+
+            <div class="row g-2">
+
+                <!-- search nel titolo -->
+                <div class="col">
+                    <input type="text" name="search_title" class="form-control" placeholder="Cerca nel titolo..."
+                        value="{{ request('search_title') }}">
+                </div>
+
+                <!-- search nella descrizione -->
+                <div class="col">
+                    <input type="text" name="search_description" class="form-control"
+                        placeholder="Cerca nella descrizione..." value="{{ request('search_description') }}">
+                </div>
+
+                <!-- per page -->
+                <div class="col">
+                    <select name="per_page" class="form-select">
+                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                    </select>
+                </div>
+
+                <!-- ALLERGENI -->
+                <div class="col">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside">
+                            Allergeni Accettati
+                        </button>
+
+                        <div class="dropdown-menu p-3" style="max-height: 300px; overflow-y: auto;">
+                            @foreach ($allergens as $allergen)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="allergens_include[]"
+                                        id="allergens_include-{{ $allergen->id }}" value="{{ $allergen->id }}"
+                                        {{ in_array($allergen->id, request('allergens_include', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="allergens_include-{{ $allergen->id }}">
+                                        {{ $allergen->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside">
+                            Allergeni Da Escludere
+                        </button>
+
+                        <div class="dropdown-menu p-3" style="max-height: 300px; overflow-y: auto;">
+                            @foreach ($allergens as $allergen)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="allergens_exclude[]"
+                                        id="allergens_exclude-{{ $allergen->id }}" value="{{ $allergen->id }}"
+                                        {{ in_array($allergen->id, request('allergens_exclude', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="allergens_exclude-{{ $allergen->id }}">
+                                        {{ $allergen->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <button class="btn btn-primary">Filtra</button>
+                    <a href="{{ route('recipes.index') }}" class="btn btn-secondary">
+                        Reset
+                    </a>
+                </div>
+
+            </div>
+        </form>
+
+        {{-- blocco per mostrare la navigazione della paginazione --}}
+        <div class="col">
+            {{ $recipes->links() }}
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -58,5 +145,8 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+    <div class="col">
+        {{ $recipes->links() }}
     </div>
 @endsection

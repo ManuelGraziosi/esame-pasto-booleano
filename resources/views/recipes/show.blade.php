@@ -21,7 +21,8 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
 
-                    <h2 class="mb-0">{{ $recipe->title }}</h2>
+                    <h2 class="mb-0"> {{ $recipe->title }}</h2>
+
 
                     <div class="d-flex gap-2">
 
@@ -44,14 +45,13 @@
                         @endauth
 
                     </div>
-
-
                 </div>
+                <hr>
 
                 {{-- descrizione --}}
                 @if ($recipe->description)
                     <p class="text-muted">
-                        {{ $recipe->description }}
+                        Descrizione della ricetta: {{ $recipe->description }}
                     </p>
                     <div>
 

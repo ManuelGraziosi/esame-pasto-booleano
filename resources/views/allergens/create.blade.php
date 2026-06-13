@@ -14,7 +14,7 @@
 
                     <div class="card-body">
 
-                        <form action="{{ route('allergens.store') }}" method="POST">
+                        <form action="{{ route('allergens.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             {{-- NAME --}}
@@ -86,8 +86,8 @@
 
                             {{-- ICON --}}
                             <div class="mb-3">
-                                <label class="form-label">Icona (URL)</label>
-                                <input type="text" name="icon"
+                                <label class="form-label" for="icon">Icona</label>
+                                <input type="file" name="icon" id="icon"
                                     class="form-control @error('icon') is-invalid @enderror" value="{{ old('icon') }}"
                                     required>
 
