@@ -28,7 +28,10 @@ class RecipeController extends Controller
 
     public function show(Recipe $recipe)
     {
-        $recipe->load('recipes');
+
+        $recipe->load('ingredients');
+
+        $recipe->allergens;
 
         return response()->json([
             'success' => true,

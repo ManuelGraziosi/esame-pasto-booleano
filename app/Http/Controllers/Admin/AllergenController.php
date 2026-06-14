@@ -55,6 +55,7 @@ class AllergenController extends Controller
 
             // $newAllergen->icon = $data['icon'];
             $icon_path = Storage::putFile('allergens', $data['icon']);
+
             $newAllergen->icon = $icon_path;
         }
 

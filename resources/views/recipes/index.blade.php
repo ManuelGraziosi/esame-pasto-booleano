@@ -103,6 +103,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Titolo</th>
                     <th scope="col">Descrizione</th>
+                    <th scope="col">Kcal totali</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -113,6 +114,7 @@
                         <th scope="row">{{ $recipe->id }}</th>
                         <td>{{ $recipe->title }}</td>
                         <td>{{ $recipe->description }}</td>
+                        <td>{{ $recipe->total_kcal }}</td>
                         <td>
                             <div class="d-flex">
                                 <a class="btn btn-info" href="{{ route('recipes.show', $recipe) }}">

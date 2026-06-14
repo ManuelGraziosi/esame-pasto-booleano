@@ -7,6 +7,7 @@ use App\Models\Allergen;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RecipeController extends Controller
 {
@@ -80,7 +81,14 @@ class RecipeController extends Controller
         $newRecipe->description = $data['description'];
         $newRecipe->preparation = $data['preparation'];
 
-        // dd($newRecipe);
+        // dd($data);
+        // controllo se c'è qualcosa in upload
+        if (array_key_exists('image', $data)) {
+
+            $image_path = Storage::putFile('recipes', $data['image']);
+
+            $newRecipe->image = $image_path;
+        }
 
         $newRecipe->save();
 
@@ -128,9 +136,29 @@ class RecipeController extends Controller
         //
 
         $data = $request->all();
-
+        // dd($data);
         $recipe->title = $data['title'];
-        $recipe->image = $data['image'];
+
+        // rimozione immagine
+        if ($request->has('remove_image') && $recipe->image) {
+
+            Storage::delete($recipe->image);
+
+            $recipe->image = null;
+        }
+
+        // upload nuova immagine
+        if ($request->hasFile('image')) {
+
+            // cancella vecchia se esiste
+            if ($recipe->image) {
+                Storage::delete($recipe->image);
+            }
+
+            $path = Storage::putFile('recipes', $data['image']);
+            $recipe->image = $path;
+        }
+
         $recipe->description = $data['description'];
         $recipe->preparation = $data['preparation'];
 

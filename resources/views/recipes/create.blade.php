@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('recipes.store') }}" method="POST">
+    <form action="{{ route('recipes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="container py-4">
@@ -29,10 +29,17 @@
                                 <input type="text" name="title" class="form-control" required>
                             </div>
 
-                            {{-- immagine (temporaneo URL) --}}
+                            {{-- immagine --}}
                             <div class="mb-3">
-                                <label class="form-label">Immagine (URL)</label>
-                                <input type="text" name="image" class="form-control">
+                                <label class="form-label" for="image">Immagine</label>
+                                <input type="file" name="image" id="image"
+                                    class="form-control @error('image') is-invalid @enderror" required>
+
+                                @error('image')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             {{-- descrizione --}}

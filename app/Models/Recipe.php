@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Recipe extends Model
 {
     //
+
+    protected $appends = ['allergens'];
+
     public function ingredients()
     {
         return $this->belongsToMany((Ingredient::class))->withTimestamps()->withPivot('quantity');
@@ -17,5 +20,12 @@ class Recipe extends Model
         return Allergen::whereHas('ingredients.recipes', function ($q) {
             $q->where('recipes.id', $this->id);
         })->distinct()->get();
+    }
+
+    public function getTotalKcalAttribute()
+    {
+        return $this->ingredients->sum(function ($ingredient) {
+            return ($ingredient->energy_kcal * $ingredient->pivot->quantity) / 100;
+        });
     }
 }

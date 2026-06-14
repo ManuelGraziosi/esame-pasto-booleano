@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('recipes.update', $recipe) }}" method="POST">
+    <form action="{{ route('recipes.update', $recipe) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -31,10 +31,29 @@
                                     required>
                             </div>
 
-                            {{-- immagine (temporaneo URL) --}}
+                            {{-- immagine --}}
                             <div class="mb-3">
-                                <label class="form-label">Immagine (URL)</label>
-                                <input type="text" name="image" class="form-control" value="{{ $recipe->image }}">
+                                <label class="form-label" for="image">Immagine</label>
+                                <input type="file" name="image" id="image"
+                                    class="form-control @error('image') is-invalid @enderror">
+
+                                @error('image')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                @if ($recipe->image)
+                                    <img src="{{ asset('storage/' . $recipe->image) }}"
+                                        alt="immagine che rappresenta {{ $recipe->name }}" class="w-75">
+                                    <div class="form-check mt-2">
+                                        <input type="checkbox" name="remove_image" value="1" class="form-check-input"
+                                            id="removeImage">
+                                        <label for="removeImage" class="form-check-label">
+                                            Rimuovi immagine
+                                        </label>
+                                    </div>
+                                @endif
+
                             </div>
 
                             {{-- descrizione --}}

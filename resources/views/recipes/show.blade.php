@@ -14,7 +14,8 @@
             @if ($recipe->image)
                 {{-- <img src="{{ asset('storage/' . $recipe->image) }}" class="w-100"
                     style="max-height: 350px; object-fit: cover;"> --}}
-                <img src="{{ $recipe->image }}" class="w-100" style="max-height: 500px; object-fit: cover;">
+                <img src="{{ asset('storage/' . $recipe->image) }}" alt="immagine che rappresenta {{ $recipe->name }}"
+                    class="w-100" style="max-height: 500px; object-fit: cover;">
             @endif
 
             <div class="card-body">
