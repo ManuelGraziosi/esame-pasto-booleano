@@ -3,9 +3,10 @@ export function slugify(text) {
         .toString()
         .toLowerCase()
         .trim()
-        .replace(/\s+/g, "_")
-        .replace(/[^\w\-]+/g, "")
-        .replace(/\_+/g, "_");
+        .replace(/\s+/g, "-") // Sostituisce gli spazi con -
+        .replace(/[^\w\-]+/g, "") // Rimuove i caratteri speciali non alfanumerici (eccetto - e _)
+        .replace(/\-+/g, "-") // Evita trattini doppi consecutivi (---)
+        .replace(/^-+|-+$/g, ""); // Rimuove eventuali trattini all'inizio o alla fine
 }
 
 export function initSlugify() {

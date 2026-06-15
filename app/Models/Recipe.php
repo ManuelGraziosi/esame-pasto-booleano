@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Recipe extends Model
 {
@@ -28,4 +30,12 @@ class Recipe extends Model
             return ($ingredient->energy_kcal * $ingredient->pivot->quantity) / 100;
         });
     }
+
+    // // funzione per erogare correttamente l'url valido delle immagini (adattivo tramite campi .env)
+    // protected function image(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ($value) => $value ? Storage::url($value) : null,
+    //     );
+    // }
 }

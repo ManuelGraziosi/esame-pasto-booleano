@@ -77,7 +77,14 @@ class RecipeController extends Controller
 
         $newRecipe = new Recipe;
         $newRecipe->title = $data['title'];
-        $newRecipe->image = $data['image'];
+
+        // upload nuova immagine
+        if ($request->hasFile('image')) {
+
+            $path = Storage::putFile('recipes', $data['image']);
+            $newRecipe->image = $path;
+        }
+
         $newRecipe->description = $data['description'];
         $newRecipe->preparation = $data['preparation'];
 

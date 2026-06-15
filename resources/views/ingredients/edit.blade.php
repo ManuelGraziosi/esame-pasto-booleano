@@ -1,185 +1,238 @@
 @extends('layouts.master')
 
+@section('title')
+    Modifica {{ $ingredient->name }} - Profilo Ingrediente
+@endsection
+
 @section('content')
-    <div class="container py-4">
-
+    <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-10 col-lg-8">
 
-                <div class="card shadow-sm">
-
-                    <div class="card-header">
-                        <h4 class="mb-0">Modifica ingrediente</h4>
+                <div class="card shadow-sm border-0 rounded-3">
+                    <div class="card-header bg-dark text-white py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-pencil-square me-2"></i>Modifica Ingrediente: {{ $ingredient->name }}
+                        </h5>
                     </div>
 
-                    <div class="card-body">
-
+                    <div class="card-body p-4">
                         <form action="{{ route('ingredients.update', $ingredient) }}" method="POST">
                             @csrf
                             @method('PUT')
 
-                            <h5 class="mb-3">Informazioni base</h5>
+                            {{-- SEZIONE: DATI BASE --}}
+                            <div class="mb-4">
+                                <h6 class="fw-bold text-secondary text-uppercase small tracking-wider mb-3">Informazioni
+                                    Base</h6>
 
-                            <div class="row">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="name" class="form-label fw-medium">Nome Ingrediente</label>
+                                        <input type="text" name="name" id="name"
+                                            class="form-control @error('name') is-invalid @enderror"
+                                            value="{{ old('name', $ingredient->name) }}" required>
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Nome</label>
-                                    <input type="text" name="name"
-                                        class="form-control @error('name') is-invalid @enderror"
-                                        value="{{ $ingredient->name }}" required>
-
-                                    @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <div class="col-md-6">
+                                        <label for="slug" class="form-label fw-medium text-muted">Slug URL (Aggiornato
+                                            Automaticamente)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light text-muted"><i
+                                                    class="bi bi-link-45deg"></i></span>
+                                            <input type="text" name="slug" id="slug"
+                                                class="form-control bg-light @error('slug') is-invalid @enderror"
+                                                value="{{ old('slug', $ingredient->slug) }}" readonly>
+                                        </div>
+                                        @error('slug')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-
-                                {{-- <div class="col-md-6 mb-3">
-                                    <label class="form-label">Categoria</label>
-                                    <select name="category_id"
-                                        class="form-select @error('category_id') is-invalid @enderror">
-
-                                        <option value="">-- Seleziona --</option>
-
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}"
-                                                {{ $ingredient->category_id') == $category->id ? 'selected' : '' }}>
-                                                {{ $category->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('category_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
-
                             </div>
 
+                            <hr class="text-muted opacity-25">
 
-                            <div class="mb-3">
-                                <label class="form-label">Slug</label>
-                                <input type="text" name="slug" class="form-control bg-light"
-                                    value="{{ $ingredient->slug }}" readonly>
+                            {{-- SEZIONE: ALLERGENI --}}
+                            <div class="mb-4">
+                                <h6 class="fw-bold text-secondary text-uppercase small tracking-wider mb-3">Allergeni
+                                    Associati</h6>
+                                <div class="row g-2">
+                                    @foreach ($allergens as $allergen)
+                                        <div class="col-6 col-sm-4 col-md-3">
+                                            <div class="p-2 border rounded-3 bg-white d-flex align-items-center h-100">
+                                                <input class="form-check-input me-2 flex-shrink-0" type="checkbox"
+                                                    name="allergens[]" value="{{ $allergen->id }}"
+                                                    id="allergens-{{ $allergen->id }}"
+                                                    {{ in_array($allergen->id, old('allergens', $ingredient->allergens->pluck('id')->toArray())) ? 'checked' : '' }}>
+
+                                                <label class="form-check-label small fw-medium text-truncate"
+                                                    for="allergens-{{ $allergen->id }}">
+                                                    <span class="badge rounded-circle me-1"
+                                                        style="background-color: {{ $allergen->color }}; width: 10px; height: 10px; display: inline-block;"></span>
+                                                    {{ $allergen->name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @error('allergens')
+                                    <div class="text-danger small mt-2">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <hr>
+                            <hr class="text-muted opacity-25">
 
-                            {{-- ALLERGENI --}}
-
-                            <h5 class="mb-3">Allergeni</h5>
-
-                            <div class="row">
-                                @foreach ($allergens as $allergen)
-                                    <div class="col-md-3 mb-3">
-                                        <input class="form-check-input" type="checkbox" name="allergens[]"
-                                            value="{{ $allergen->id }}" id="allergens-{{ $allergen->id }}"
-                                            {{ $ingredient->allergens->contains($allergen->id) ? 'checked' : '' }}>
-                                        <label class="form-label"
-                                            for="allergens-{{ $allergen->id }}">{{ $allergen->name }}</label>
-                                    </div>
-                                @endforeach
-
-                            </div>
-                            <hr>
-
-
-                            {{-- MACRONUTRIENTI --}}
-
-                            <h5 class="mb-3">Valori nutrizionali principali</h5>
-
-                            <div class="row">
-
-                                <div class="col-md-3 mb-3">
-                                    <label>Kcal</label>
-                                    <input type="number" step="0.01" name="energy_kcal" class="form-control"
-                                        value="{{ $ingredient->energy_kcal }}">
+                            {{-- SEZIONE: MACRONUTRIENTI (Su 100g) --}}
+                            <div class="mb-4">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h6 class="fw-bold text-secondary text-uppercase small tracking-wider m-0">Valori
+                                        Nutrizionali Principali</h6>
+                                    <span class="badge bg-secondary-subtle text-secondary fw-semibold">Riferimento su
+                                        100g</span>
                                 </div>
 
-                                <div class="col-md-3 mb-3">
-                                    <label>Proteine (g)</label>
-                                    <input type="number" step="0.01" name="proteins" class="form-control"
-                                        value="{{ $ingredient->proteins }}">
-                                </div>
-
-                                <div class="col-md-3 mb-3">
-                                    <label>Grassi (g)</label>
-                                    <input type="number" step="0.01" name="lipids" class="form-control"
-                                        value="{{ $ingredient->lipids }}">
-                                </div>
-
-                                <div class="col-md-3 mb-3">
-                                    <label>Carboidrati (g)</label>
-                                    <input type="number" step="0.01" name="available_carbohydrates" class="form-control"
-                                        value="{{ $ingredient->available_carbohydrates }}">
-                                </div>
-
-                            </div>
-
-                            <hr>
-
-
-                            {{-- DETTAGLI AVANZATI --}}
-
-                            <button class="btn btn-outline-secondary mb-3" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#advanced">
-                                Mostra dettagli avanzati
-                            </button>
-
-                            <div class="collapse" id="advanced">
-
-                                <div class="row">
-
-                                    <div class="col-md-4 mb-3">
-                                        <label>Fibre</label>
-                                        <input type="number" step="0.01" name="total_fiber" class="form-control"
-                                            value="{{ $ingredient->total_fiber }}">
+                                <div class="row g-3">
+                                    <div class="col-6 col-md-3">
+                                        <label for="energy_kcal" class="form-label fw-medium">Energia (Kcal)</label>
+                                        <input type="number" step="0.01" min="0" name="energy_kcal"
+                                            id="energy_kcal" class="form-control @error('energy_kcal') is-invalid @enderror"
+                                            value="{{ old('energy_kcal', $ingredient->energy_kcal ?? 0) }}">
+                                        @error('energy_kcal')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-md-4 mb-3">
-                                        <label>Ferro</label>
-                                        <input type="number" step="0.01" name="iron" class="form-control"
-                                            value="{{ $ingredient->iron }}">
+                                    <div class="col-6 col-md-3">
+                                        <label for="proteins" class="form-label fw-medium">Proteine (g)</label>
+                                        <input type="number" step="0.01" min="0" name="proteins" id="proteins"
+                                            class="form-control @error('proteins') is-invalid @enderror"
+                                            value="{{ old('proteins', $ingredient->proteins ?? 0) }}">
+                                        @error('proteins')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-md-4 mb-3">
-                                        <label>Sodio</label>
-                                        <input type="number" step="0.01" name="sodium" class="form-control"
-                                            value="{{ $ingredient->sodium }}">
+                                    <div class="col-6 col-md-3">
+                                        <label for="lipids" class="form-label fw-medium">Grassi (g)</label>
+                                        <input type="number" step="0.01" min="0" name="lipids" id="lipids"
+                                            class="form-control @error('lipids') is-invalid @enderror"
+                                            value="{{ old('lipids', $ingredient->lipids ?? 0) }}">
+                                        @error('lipids')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-md-4 mb-3">
-                                        <label>Calcio</label>
-                                        <input type="number" step="0.01" name="calcium" class="form-control"
-                                            value="{{ $ingredient->calcium }}">
-                                    </div>
-
-                                    <div class="col-md-4 mb-3">
-                                        <label>Potassio</label>
-                                        <input type="number" step="0.01" name="potassium" class="form-control"
-                                            value="{{ $ingredient->potassium }}">
+                                    <div class="col-6 col-md-3">
+                                        <label for="available_carbohydrates" class="form-label fw-medium">Carboidrati
+                                            (g)</label>
+                                        <input type="number" step="0.01" min="0" name="available_carbohydrates"
+                                            id="available_carbohydrates"
+                                            class="form-control @error('available_carbohydrates') is-invalid @enderror"
+                                            value="{{ old('available_carbohydrates', $ingredient->available_carbohydrates ?? 0) }}">
+                                        @error('available_carbohydrates')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
-
                             </div>
 
-                            {{-- BOTTONI --}}
-                            <div class="d-flex justify-content-between mt-4">
-                                <a href="{{ route('ingredients.index') }}" class="btn btn-secondary">
-                                    ← Annulla
+                            <hr class="text-muted opacity-25">
+
+                            {{-- SEZIONE: DETTAGLI AVANZATI (COLLAPSE) --}}
+                            <div class="mb-4">
+                                <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2 mb-3"
+                                    type="button" data-bs-toggle="collapse" data-bs-target="#advancedNutrition"
+                                    aria-expanded="false">
+                                    <i class="bi bi-sliders"></i> Mostra Micronutrienti e Fibre
+                                </button>
+
+                                <div class="collapse @if ($errors->hasAny(['total_fiber', 'iron', 'sodium', 'calcium', 'potassium'])) show @endif"
+                                    id="advancedNutrition">
+                                    <div class="card card-body border-0 bg-light p-3 rounded-3">
+                                        <div class="row g-3">
+                                            <div class="col-6 col-md-4">
+                                                <label for="total_fiber" class="form-label small fw-medium">Fibre
+                                                    (g)</label>
+                                                <input type="number" step="0.01" min="0" name="total_fiber"
+                                                    id="total_fiber"
+                                                    class="form-control @error('total_fiber') is-invalid @enderror"
+                                                    value="{{ old('total_fiber', $ingredient->total_fiber) }}">
+                                                @error('total_fiber')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-6 col-md-4">
+                                                <label for="iron" class="form-label small fw-medium">Ferro
+                                                    (mg)</label>
+                                                <input type="number" step="0.01" min="0" name="iron"
+                                                    id="iron"
+                                                    class="form-control @error('iron') is-invalid @enderror"
+                                                    value="{{ old('iron', $ingredient->iron) }}">
+                                                @error('iron')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-6 col-md-4">
+                                                <label for="sodium" class="form-label small fw-medium">Sodio
+                                                    (mg)</label>
+                                                <input type="number" step="0.01" min="0" name="sodium"
+                                                    id="sodium"
+                                                    class="form-control @error('sodium') is-invalid @enderror"
+                                                    value="{{ old('sodium', $ingredient->sodium) }}">
+                                                @error('sodium')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-6 col-md-4">
+                                                <label for="calcium" class="form-label small fw-medium">Calcio
+                                                    (mg)</label>
+                                                <input type="number" step="0.01" min="0" name="calcium"
+                                                    id="calcium"
+                                                    class="form-control @error('calcium') is-invalid @enderror"
+                                                    value="{{ old('calcium', $ingredient->calcium) }}">
+                                                @error('calcium')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-6 col-md-4">
+                                                <label for="potassium" class="form-label small fw-medium">Potassio
+                                                    (mg)</label>
+                                                <input type="number" step="0.01" min="0" name="potassium"
+                                                    id="potassium"
+                                                    class="form-control @error('potassium') is-invalid @enderror"
+                                                    value="{{ old('potassium', $ingredient->potassium) }}">
+                                                @error('potassium')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- BOTTONI DI SALVATAGGIO / ANNULLAMENTO --}}
+                            <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-4">
+                                <a href="{{ route('ingredients.index') }}" class="btn btn-outline-secondary px-4">
+                                    <i class="bi bi-arrow-left me-1"></i> Annulla
                                 </a>
-
-                                <button type="submit" class="btn btn-primary">
-                                    Salva
+                                <button type="submit" class="btn btn-warning px-4 fw-bold shadow-sm text-dark">
+                                    <i class="bi bi-arrow-clockwise me-1"></i> Aggiorna Ingrediente
                                 </button>
                             </div>
 
                         </form>
-
                     </div>
                 </div>
 
             </div>
         </div>
-
     </div>
 @endsection

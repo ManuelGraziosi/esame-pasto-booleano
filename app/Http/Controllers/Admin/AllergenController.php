@@ -101,6 +101,26 @@ class AllergenController extends Controller
         $allergen->text = $data['text'];
         $allergen->description = $data['description'];
 
+        // rimozione immagine
+        if ($request->has('remove_icon') && $allergen->icon) {
+
+            Storage::delete($allergen->icon);
+
+            $allergen->icon = null;
+        }
+
+        // upload nuova immagine
+        if ($request->hasFile('icon')) {
+
+            // cancella vecchia se esiste
+            if ($allergen->icon) {
+                Storage::delete($allergen->icon);
+            }
+
+            $path = Storage::putFile('allergens', $data['icon']);
+            $allergen->icon = $path;
+        }
+
         if (array_key_exists('icon', $data)) {
 
             // eliminare l'immagine precedente
